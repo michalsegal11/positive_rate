@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פרטי אשראי</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link href="credit_dard.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <h1>הזן פרטי אשראי</h1>
+        <form action="/save-card" method="post">
+            <div class="form-group">
+                <label for="cardNumber"><i class="fas fa-credit-card"></i> מספר כרטיס אשראי</label>
+                <input type="text" name="cardNumber" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+            </div>
+            <div class="form-group">
+                <label for="cardHolder"><i class="fas fa-user"></i> בעל הכרטיס</label>
+                <input type="text" name="cardHolder" id="cardHolder" placeholder="שמך כפי שמופיע על הכרטיס" required>
+            </div>
+            <div class="form-group">
+                <label for="expiryDate"><i class="fas fa-calendar-alt"></i> תאריך תפוגה</label>
+                <input type="text" name="expiryDate" id="expiryDate" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv"><i class="fas fa-lock"></i> CVV</label>
+                <input type="text" name="cvv" id="cvv" placeholder="XXX" required>
+            </div>
+            <input type="submit" value="שמור פרטים">
+        </form>
+    </div>
+</body>
+</html>
