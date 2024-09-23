@@ -1,4 +1,4 @@
-import {getusers,getUserById} from '../service/users.js';
+import {getusers,getUserById,addUser} from '../service/users.js';
 export class User {
     getAll = async (req, res) => {
 
@@ -18,58 +18,36 @@ export class User {
 
    
 
-    search= async (req, res) => {
+    search = async (req, res) => {
         try {
-            console.log("גבכנעהינח");
-            const result = await getUserById();
-            console.log('successfully ');
-            res.send(result);
-
-        } catch (error) {
-            console.error('there was an error:', error.message);
-            res.status(500).send(error.message);
-
-        }
-    };
-
-    
-    add =async (req, res) => {
-
-        try {
-            const { name, gmail,t_z,phone,adress,password,status } = req.body; // הנח שהנתונים מגיעים בגוף הבקשה
-            console.log(newUser)
-            //  add validate
-
-            const result = await pool.request()
-             .query('SELECT * FROM users');
-             // קבלת תוכן הטבלה
-             const users = result.recordset;
-
-
-             const result1 = await pool.request()
-             .input('t_z', sql.Int, t_z)
-             .input('name', sql.NVarChar, name) // דוגמה לעדכון שם
-             .input('gmail', sql.NVarChar, gmail) // דוגמה לעדכון דוא"ל
-             .input('password', sql.Int, password)
-             .input('adress', sql.NVarChar, adress) // דוגמה לעדכון שם
-             .input('birthday', sql.NVarChar, birthday)
-             .input('status', sql.NVarChar, status)
-      
-             .query('UPDATE users SET name = @name, gmail = @gmail, password = @password,adress = @adress, birthday = @birthday, status = @status ,t_z = @t_z');
-           
-             if (result.rowsAffected[0] === 0) {
-                res.status(404).send("User not found");
+            const id = req.params.id;
+            console.log(id);
+            const result = await getUserById(id);
+            if (result) {
+                res.send(result);
             } else {
-                console.log('User updated successfully');
-                res.send({ message: "User updated successfully" });
+                res.status(404).send('User not found');
             }
-    
         } catch (error) {
             console.error('There was an error:', error.message);
             res.status(500).send(error.message);
         }
     };
+    add = async (req, res) => {
 
+        try {
+            let newUser  = req.body; // Corrected variable name          
+            let users = await addUser(newUser); // Corrected variable name           
+            res.send(users);
+
+        } catch (error) {
+            console.log('there was an error:', error.message);
+            res.status(500).send(error.message);
+
+        }
+    };
+
+    
     delete=( async (req, res) => {
         try {
             const id = req.params.t_z;

@@ -1,4 +1,4 @@
-import { getQuery } from './query.js';
+import { getQuery ,insertQuery} from './query.js';
 
 const getusers = async () => {
     try {
@@ -14,13 +14,13 @@ const getusers = async () => {
 const getUserById = async (t_z) => { 
     try {
         // נניח ש-t_z הוא מספר
-        const users = await getQuery("users");
-        
+        const users1 = await getQuery("users");
+        console.log("sdfgh");
         // חיפוש המשתמש לפי תעודת זהות
-        const user = users.find(user => user.t_z === t_z);
-        
-        if (user) {
-            return user; // מחזירים את המשתמש אם נמצא
+        const user1 = users1.find(user1 => user1.t_z === t_z);
+       
+        if (user1) {
+            return user1; // מחזירים את המשתמש אם נמצא
         } else {
             console.log(`User with ID ${t_z} does not exist.`);
             return null; // משתמש לא קיים
@@ -31,34 +31,46 @@ const getUserById = async (t_z) => {
     } 
 };
 
-
-
-
-
-
-const adduser = async (newUser) => {
-    console.log("adduser")
+const addUser = async (newUser) => {
+    console.log("addUser");
+    const colums = {
+        "t_z": "int",
+        "name": "string",
+        "phone": "string",
+        "gmail": "string",
+        "password": "string",
+        "adress": "string",
+        "birthday": "string",
+        "status": "string"
+    };
     try {
-let nameValues = "";
-let values="";
-for (const key in colums) {
-    nameValues+=  key+',';
-    if(colums[key] == "string")
-    values+=  `'${newUser[key]}',`;
-    else
-    values+=  newUser[key]+',';
-}
-nameValues = nameValues.slice(0, -1);
-values = values.slice(0, -1);
-console.log(nameValues);
-console.log(values);
-        let users = await insertQuery("user",nameValues,values);
-        console.log(users)
-       return users;
+        let nameValues = "";
+        let values = "";
+
+        for (const key in colums) {
+            if (newUser[key] === undefined) {
+                console.error(`Missing value for ${key}`);
+                return { error: `Missing value for ${key}` };
+            }
+
+            nameValues += `${key},`;
+            values += (colums[key] === "string") ? `'${newUser[key]}',` : `${newUser[key]},`;
+        }
+
+        nameValues = nameValues.slice(0, -1);
+        values = values.slice(0, -1);
+        
+        console.log(nameValues);
+        console.log(values);
+
+        let users = await insertQuery("users", nameValues, values); // ודא שהשם של הטבלה הוא נכון
+        console.log(users);
+        return users;
     } catch (err) {
-        console.error('Query ');
-        return {"error":"err"};
+        console.error('Query failed!', err);
+        return { error: err.message };
     } 
 };
 
- export { getusers,getUserById, adduser}
+
+ export { getusers,getUserById, addUser}
