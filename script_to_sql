@@ -1,0 +1,10 @@
+USE [master];
+GO
+CREATE LOGIN [m] WITH PASSWORD = 'Ti-yun20277';
+GO
+USE [positive_rate];
+GO
+CREATE USER [m] FOR LOGIN [m];
+GO
+GRANT SELECT, INSERT, UPDATE, DELETE ON SCHEMA::[dbo] TO [m];
+GO
