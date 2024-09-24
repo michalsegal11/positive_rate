@@ -1,28 +1,28 @@
 import { getQuery ,insertQuery} from './query.js';
 
-const getteachers = async () => {
+const getusers = async () => {
     try {
-        const teachers = await getQuery("teachers");
-        console.log(teachers);
-        return teachers;
+        const users = await getQuery("users");
+        console.log(users);
+        return users;
     } catch (err) {
         console.error('Query failed! Error:', err);
         return [];
     } 
 };
 
-const getteacherById = async (t_z) => { 
+const getUserById = async (t_z) => { 
     try {
         // נניח ש-t_z הוא מספר
-        const teachers1 = await getQuery("teachers");
+        const users1 = await getQuery("users");
         console.log("sdfgh");
         // חיפוש המשתמש לפי תעודת זהות
-        const teacher1 = teachers1.find(teacher1 => teacher1.t_z === t_z);
+        const user1 = users1.find(user1 => user1.t_z === t_z);
        
-        if (teacher1) {
-            return teacher1; // מחזירים את המשתמש אם נמצא
+        if (user1) {
+            return user1; // מחזירים את המשתמש אם נמצא
         } else {
-            console.log(`teacher with ID ${t_z} does not exist.`);
+            console.log(`User with ID ${t_z} does not exist.`);
             return null; // משתמש לא קיים
         }
     } catch (err) {
@@ -31,8 +31,8 @@ const getteacherById = async (t_z) => {
     } 
 };
 
-const addteacher = async (newteacher) => {
-    console.log("addteacher");
+const addUser = async (newUser) => {
+    console.log("addUser");
     const colums = {
         "t_z": "int",
         "name": "string",
@@ -48,13 +48,13 @@ const addteacher = async (newteacher) => {
         let values = "";
 
         for (const key in colums) {
-            if (newteacher[key] === undefined) {
+            if (newUser[key] === undefined) {
                 console.error(`Missing value for ${key}`);
                 return { error: `Missing value for ${key}` };
             }
 
             nameValues += `${key},`;
-            values += (colums[key] === "string") ? `'${newteacher[key]}',` : `${newteacher[key]},`;
+            values += (colums[key] === "string") ? `'${newUser[key]}',` : `${newUser[key]},`;
         }
 
         nameValues = nameValues.slice(0, -1);
@@ -63,9 +63,9 @@ const addteacher = async (newteacher) => {
         console.log(nameValues);
         console.log(values);
 
-        let teachers = await insertQuery("teachers", nameValues, values); // ודא שהשם של הטבלה הוא נכון
-        console.log(teachers);
-        return teachers;
+        let users = await insertQuery("users", nameValues, values); // ודא שהשם של הטבלה הוא נכון
+        console.log(users);
+        return users;
     } catch (err) {
         console.error('Query failed!', err);
         return { error: err.message };
@@ -73,4 +73,4 @@ const addteacher = async (newteacher) => {
 };
 
 
- export { getteachers,getteacherById, addteacher}
+ export { getusers,getUserById, addUser}

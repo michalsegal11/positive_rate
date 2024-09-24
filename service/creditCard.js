@@ -1,28 +1,28 @@
 import { getQuery ,insertQuery} from './query.js';
 
-const getteachers = async () => {
+const getcreditCard = async () => {
     try {
-        const teachers = await getQuery("teachers");
-        console.log(teachers);
-        return teachers;
+        const creditCard = await getQuery("credit_card");
+        console.log(creditCard);
+        return creditCard;
     } catch (err) {
         console.error('Query failed! Error:', err);
         return [];
     } 
 };
 
-const getteacherById = async (t_z) => { 
+const getcreditCardById = async (t_z) => { 
     try {
         // נניח ש-t_z הוא מספר
-        const teachers1 = await getQuery("teachers");
+        const AllcreditCard = await getQuery("credit_card");
         console.log("sdfgh");
         // חיפוש המשתמש לפי תעודת זהות
-        const teacher1 = teachers1.find(teacher1 => teacher1.t_z === t_z);
+        const creditCard1 = AllcreditCard.find(creditCard1 => creditCard1.t_z === t_z);
        
-        if (teacher1) {
-            return teacher1; // מחזירים את המשתמש אם נמצא
+        if (creditCard1) {
+            return creditCard1; // מחזירים את המשתמש אם נמצא
         } else {
-            console.log(`teacher with ID ${t_z} does not exist.`);
+            console.log(`creditCard with ID ${t_z} does not exist.`);
             return null; // משתמש לא קיים
         }
     } catch (err) {
@@ -31,8 +31,8 @@ const getteacherById = async (t_z) => {
     } 
 };
 
-const addteacher = async (newteacher) => {
-    console.log("addteacher");
+const addcreditCard = async (newcreditCard) => {
+    console.log("addcreditCard");
     const colums = {
         "t_z": "int",
         "name": "string",
@@ -48,13 +48,13 @@ const addteacher = async (newteacher) => {
         let values = "";
 
         for (const key in colums) {
-            if (newteacher[key] === undefined) {
+            if (newcreditCard[key] === undefined) {
                 console.error(`Missing value for ${key}`);
                 return { error: `Missing value for ${key}` };
             }
 
             nameValues += `${key},`;
-            values += (colums[key] === "string") ? `'${newteacher[key]}',` : `${newteacher[key]},`;
+            values += (colums[key] === "string") ? `'${newcreditCard[key]}',` : `${newcreditCard[key]},`;
         }
 
         nameValues = nameValues.slice(0, -1);
@@ -63,9 +63,9 @@ const addteacher = async (newteacher) => {
         console.log(nameValues);
         console.log(values);
 
-        let teachers = await insertQuery("teachers", nameValues, values); // ודא שהשם של הטבלה הוא נכון
-        console.log(teachers);
-        return teachers;
+        let creditCard = await insertQuery("credit_card", nameValues, values); // ודא שהשם של הטבלה הוא נכון
+        console.log(creditCard);
+        return creditCard;
     } catch (err) {
         console.error('Query failed!', err);
         return { error: err.message };
@@ -73,4 +73,4 @@ const addteacher = async (newteacher) => {
 };
 
 
- export { getteachers,getteacherById, addteacher}
+ export { getcreditCard,getcreditCardById, addcreditCard}
