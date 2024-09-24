@@ -1,10 +1,10 @@
 import sql from 'mssql';
 
 const config = {
-    user: 'm1',
-    password: 'Ti-yun20277',
+    user: 'm2',
+    password: '12345',
     server: 'DESKTOP-SSNMLFD', // או שם השרת המתאים
-    database: 'positive_rate',
+    database: 'positive_rate1',
     options: {
         encrypt: false, // או true, תלוי בצורך שלך
         trustServerCertificate: true // זה המפתח להימנע מהשגיאה
