@@ -12,6 +12,8 @@ app.use('/images',express.static('uploads'))
 app.get("/users",userRouter);
 app.get("/users/:id",userRouter);
 app.post("/users",userRouter);
+app.put("/users/:id",userRouter);
+app.delete("/users/:id",userRouter);
 
 app.listen(port, () => {
     //  console.log( process.env)
