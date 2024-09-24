@@ -1,4 +1,4 @@
-import { getQuery ,insertQuery} from './query.js';
+import { getQuery ,insertQuery,deleteQuery,updateQuery} from './query.js';
 
 const getusers = async () => {
     try {
@@ -73,5 +73,47 @@ const addUser = async (newUser) => {
 };
 
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+const updateUser = async (t_z, updatedUser) => {
+    try {
+        let updateU = "";
+        for (const key in updatedUser) {
+            if (typeof updatedUser[key] === "string") {
+                updateU += `${key} = '${updatedUser[key]}', `;
+            } else {
+                updateU += `${key} = ${updatedUser[key]}, `;
+            }
+        }
+        updateU = updateU.slice(0, -2);
+        console.log(updateU);
+        let user = await updateQuery("users", updateU,"t_z", id);
+        console.log(user);
+        return user;
+    } catch (err) {
+        console.error('Query Error:', err);
+        return { "error": "err" };
+    }
+};
+
+const deleteUser= async (id) => {
+    console.log("deleteUser");
+    try {
+        let user = await deleteQuery("users", "t_z", id);
+        console.log(user);
+        return user;
+    } catch (err) {
+        console.error('Query Error:', err);
+        return { "error": "err" };
+    }
+};
+
+
+ export { getteachers,getteacherById, addteacher,deleteUser,updateUser}
+=======
+>>>>>>> 0e669d9aac5dfd1047f2036ab604830beffa31d0
  export { getusers,getUserById, addUser}
+>>>>>>> 308781575800962e3bbc268373150108017c9fb7
