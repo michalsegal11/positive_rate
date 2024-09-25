@@ -24,6 +24,7 @@ function loadPage()
     
 }
 
+
 //פונקציה להוספת מכשיר כושר לדף
 function add_fitness_equipment(routing) {
 
