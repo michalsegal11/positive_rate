@@ -59,6 +59,8 @@ export class User {
             res.status(500).send(error.message);
         }
     });
+
+    
     put = async (req, res) => {
         try {
             const id = req.params.t_z; // קבלת מזהה המשתמש
