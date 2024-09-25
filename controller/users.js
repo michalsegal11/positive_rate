@@ -60,7 +60,7 @@ export class User {
         }
     });
 
-    
+
     put = async (req, res) => {
         try {
             const id = req.params.t_z; // קבלת מזהה המשתמש
@@ -82,5 +82,6 @@ export class User {
             res.status(500).send(error.message); // שגיאה פנימית אם משהו משתבש
         }
     };
+    
     
 }
