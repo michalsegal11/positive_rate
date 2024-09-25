@@ -2,7 +2,6 @@ import {connectToDatabase} from '../service/database.js';
 import sql from 'mssql';
 
 
-
 const executeQuery = async (query) => {
     try {
         const dbPool = await connectToDatabase();
