@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f7;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #2d6a4f;
+    color: white;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+
+#devices-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#devices-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#add-device-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-device-form input {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+#devices-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#devices-container ul li {
+    margin: 5px 0;
+    padding: 10px;
+    text-align: right;
+  
+}
+
+
+.device-button{
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2d6a4f;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+
+.device-button:hover {
+    background-color: #238636;
+}
+
+
+

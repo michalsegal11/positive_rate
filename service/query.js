@@ -28,7 +28,7 @@ const getQuery = async (table_name) => {
 const  insertQuery = async (table_name,valuesName,values) =>{
     const query = `INSERT INTO [dbo].${table_name}(${valuesName}) VALUES (${values})`
     console.log(query);
-     const   result =await executeQuery(query)
+     const  result =await executeQuery(query)
     return result;
 }
 const updateQuery = async (tableName, updateValues, namefield, valueField) => {

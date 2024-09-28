@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מכשירי כושר</title>
+    <link rel="stylesheet" href="../manager/admin.css">
+</head>
+<body>
+
+    <header>
+        <h1>מכשירי כושר</h1>
+    </header>
+
+    <main>
+        <section id="devices-container">
+            <!-- <h2>רשימת מכשירי כושר קיימים</h2> -->
+            <button class="device-button" id="fetchDataBtn">רשימת מכשירי כושר קיימים</button>
+            <ul id="equipmentList"></ul>
+        </section>
+
+        <section id="add-device-form">
+            <h2>הוספת מכשיר כושר</h2>
+            <input type="file" id="device-image" accept="image/*" required />
+            <input type="text" id="image-name" placeholder="Enter new image name">
+            <input type="text" id="device-info" placeholder="מידע אודות המכשיר" required>
+            <button class="device-button" id="add-device-button">הוסף מכשיר</button>
+        </section>
+    </main>
+
+    <script src="../manager/index.js"></script>
+</body>
+</html>
+
+
+
