@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use('/images',express.static('uploads'))
 app.use(express.static('../manager'));
-app.use('/fitness_equipment', FitnessEquipmentRouter); 
+
 
 
 

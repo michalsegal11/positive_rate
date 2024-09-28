@@ -1,5 +1,6 @@
 
-
+let file;
+let formData;
 
 
 document.getElementById('fetchDataBtn').addEventListener('click', async () => {
@@ -57,29 +58,38 @@ document.getElementById('add-device-button').addEventListener('click', async () 
 
 
     try {
-        const response = await fetch('http://localhost:3000/fitness_equipment', {
+        // שלח את התמונה לשרת להעתקה
+        await fetch('http://localhost:3000/upload-image', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, about: info }) // שים לב שהשדה "about" הוא השם הנכון של המידע
+            body: formData
         });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+        const response = await fetch('http://localhost:3000/fitness_equipment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, about: info }) // שים לב שהשדה "about" הוא השם הנכון של המידע
+            });
+         if (!response.ok) {
+             throw new Error('Network response was not ok');
+         }
 
-        // קבלת התגובה מהשרת
-        const result = await response.json(); // הנחה שהשרת מחזיר JSON עם המידע
+
+             // קבלת התגובה מהשרת
+        const result = await response.json();
+        console.log('Added device:', result);
 
         // הצגת הודעה למשתמש
         alert('Device added successfully!');
+        console.log('Image uploaded successfully!');
 
         // אם תרצה לנקות את השדות לאחר ההוספה, תוכל לעשות זאת כאן
-        document.getElementById('device-name').value = '';
+        document.getElementById('image-name').value = '';
         document.getElementById('device-info').value = '';
+        document.getElementById('device-image').value = '';
 
-        console.log('Added device:', result); // הצגת התוצאה בקונסול אם תרצה לבדוק
+        // console.log('Added device:', result); // הצגת התוצאה בקונסול אם תרצה לבדוק
 
     } catch (error) {
         console.error('Error adding device:', error);
@@ -88,28 +98,19 @@ document.getElementById('add-device-button').addEventListener('click', async () 
 });
 
 
-document.getElementById('image-name').addEventListener('change', async (event) => {
+document.getElementById('device-image').addEventListener('change', async (event) => {
     const file = event.target.files[0];
 
     if (file) {
-        const newName = document.getElementById('image-name').value || file.name; // אם המשתמש לא הכניס שם חדש, השתמש בשם המקורי
-        const formData = new FormData();
+        const newName = document.getElementById('image-name').value || file.name; // כאן נשאר כמו שהיה
+        formData = new FormData();
         formData.append('image', file);
         formData.append('newName', newName); // הוספת השם החדש ל-FormData
 
-        try {
-            // שלח את התמונה לשרת להעתקה
-            await fetch('http://localhost:3000/upload-image', {
-                method: 'POST',
-                body: formData
-            });
-
-            console.log('Image uploaded successfully!');
-        } catch (error) {
-            console.error('Error uploading image:', error);
-        }
+        
     }
 });
+
 
 
 
