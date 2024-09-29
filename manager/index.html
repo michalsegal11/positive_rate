@@ -13,13 +13,23 @@
     </header>
 
     <main>
-        <section id="devices-container">
-            <!-- <h2>רשימת מכשירי כושר קיימים</h2> -->
-            <button class="device-button" id="fetchDataBtn">רשימת מכשירי כושר קיימים</button>
-            <ul id="equipmentList"></ul>
-        </section>
+       
+        <!-- <button class="device-button" id="fetchDataBtn">רשימת מכשירי כושר קיימים</button> -->
 
-        <section id="add-device-form">
+        <section id="gallery">
+            <!-- <h2>רשימת מכשירי כושר קיימים</h2> -->
+          
+            <!-- <ul id="equipmentList"></ul> -->
+            
+        </section>
+        <div class="button-container">
+            <button class="hidden-button get" id="fetchDataBtn" onclick="Get()"></button>
+            <button class="hidden-button put" id="add-device-form" onclick="Post()"></button>
+            <button class="hidden-button post"></button>
+            <button class="hidden-button delete"></button>
+        </div>
+    
+        <section id="add-form">
             <h2>הוספת מכשיר כושר</h2>
             <input type="file" id="device-image" accept="image/*" required />
             <input type="text" id="image-name" placeholder="Enter new image name">

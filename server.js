@@ -17,8 +17,11 @@ const port = process.env.PORT || 3000
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use('/images',express.static('uploads'))
-app.use(express.static('../manager'));
+app.use('.public/images',express.static('uploads'))
+app.use(express.static('./manager'));
+// app.use('.public/images', express.static(path.join(__dirname, 'images')));
+
+
 
 
 
@@ -49,18 +52,20 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // route להעלאת תמונה
-app.post('/upload-image', upload.single('image'), (req, res) => {
+app.post('/upload-image', upload.single('image'), async (req, res) => {
     if (req.file) {
-        const newName = req.body.newName || req.file.originalname; // השתמש בשם החדש אם קיים
-        const newFilePath = `./public/images/${newName}`; // הנתיב החדש
+        const newName = decodeURIComponent(req.body.newName) || req.file.originalname;
 
-        // שנה את שם הקובץ
-        fs.rename(`./public/images/${req.file.filename}`, newFilePath, (err) => {
-            if (err) {
-                return res.status(500).send('Error renaming file');
-            }
+        const newFilePath = `./public/images/${newName}`;
+        console.log("******************************")
+        console.log(newName);
+
+        try {
+            await fs.promises.rename(`./public/images/${req.file.filename}`, newFilePath);
             res.status(200).send('Image uploaded successfully');
-        });
+        } catch (err) {
+            res.status(500).send('Error renaming file');
+        }
     } else {
         res.status(400).send('Error uploading image');
     }
