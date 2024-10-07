@@ -2,44 +2,94 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,minimum-scale=1">
-		<title>Login</title>
-        <!-- the form awesome library is used to add icons to our form -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-        <!-- include the stylesheet file -->
+		<meta name="viewport" content="width=device-width, minimum-scale=1">
+		<title>Sign-In / Sign-Up</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
         <link href="login.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<div class="login">
-			<h1>Login</h1>
-			<form action="/auth" method="post">	
-				<label for="username">
-					<i class="fas fa-user"></i>
-				</label>
-				<input type="text" name="firstName" placeholder="FirstName" id="firstName" required>
-				<label for="username">
-					<i class="fas fa-user"></i>
-				</label>
-				<input type="text" name="lastName" placeholder="LastName" id="lastName" required>
-				<label for="password">
-					<i class="fas fa-lock"></i>
-				</label>
-				<input type="text" name="adress" placeholder="Adress" id="adress" required>
-				<label for="date">
-					<i class="fas fa-lock"></i>
-				</label>
-				<input type="date" name="birthday" placeholder="Birthday" id="birthday" required>
-				<label for="password">
-					<i class="fas fa-lock"></i>
-				</label>
-				<input type="text" name="gmail" placeholder="Gmail" id="gmail" required>
-				<label for="password">
-					<i class="fas fa-lock"></i>
-				</label>
-				<input type="password" name="password" placeholder="Password" id="password" required>
-				
-				<input type="submit" value="Login">
+			<h1>Sign-In / Sign-Up</h1>
+			<div id="buttons">
+				<button id="signInBtn">Sign In</button>
+				<button id="signUpBtn">Sign Up</button>
+			</div>
+			<form id="signInForm" style="display: none;" onsubmit="finfUser(event)">
+				<div class="input-container">
+					<label for="username">
+						<i class="fas fa-user"></i>
+					</label>
+					<input type="text" name="username" placeholder="Username" id="username1" required>
+				</div>
+				<div class="input-container">
+					<label for="password">
+						<i class="fas fa-lock"></i>
+					</label>
+					<input type="password" name="password" placeholder="Password" id="password" required>
+					<span class="toggle-password" onclick="togglePassword('password')">
+						<i class="fas fa-eye"></i>
+					</span>
+				</div>
+				<input type="submit" value="Sign In">
+			</form>
+			<form id="signUpForm" style="display: none;" onsubmit="addUser(event)">
+				<div class="input-container">
+					<label for="t_z">
+						<i class="fas fa-t_z"></i>
+					</label>
+					<input type="text" name="t_z" placeholder="T_z" id="t_z" required>
+				</div>
+				<div class="input-container">
+					<label for="username">
+						<i class="fas fa-user"></i>
+					</label>
+					<input type="text" name="username" placeholder="Username" id="username" required>
+				</div>
+				<div class="input-container">
+					<label for="phone">
+						<i class="fas fa-user"></i>
+					</label>
+					<input type="text" name="phone" placeholder="Phone" id="phone" required>
+				</div>
+				<div class="input-container">
+					<label for="adress">
+						<i class="fas fa-address-card"></i>
+					</label>
+					<input type="text" name="adress" placeholder="Address" id="adress" required>
+				</div>
+				<div class="input-container">
+					<label for="birthday">
+						<i class="fas fa-calendar-alt"></i>
+					</label>
+					<input type="date" name="birthday" id="birthday" required>
+				</div>
+				<div class="input-container">
+					<label for="gmail">
+						<i class="fas fa-envelope"></i>
+					</label>
+					<input type="email" name="gmail" placeholder="Gmail" id="gmail" required>
+				</div>
+				<div class="input-container">
+					<label for="status">
+						<i class="fas fa-address-card"></i>
+					</label>
+					<input type="text" name="status" placeholder="Status" id="status" required>
+				</div>
+				<div class="input-container">
+					<label for="passwordSignUp">
+						<i class="fas fa-lock"></i>
+					</label>
+					<input type="password" name="password" placeholder="Password" id="passwordSignUp" required>
+					<span class="toggle-password" onclick="togglePassword('passwordSignUp')">
+						<i class="fas fa-eye"></i>
+					</span>
+				</div>
+								
+				<button type="submit">Sign Up</button>
+			
 			</form>
 		</div>
+
+		<script src="login.js"></script>
 	</body>
 </html>
