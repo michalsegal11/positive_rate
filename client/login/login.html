@@ -14,18 +14,19 @@
 				<button id="signInBtn">Sign In</button>
 				<button id="signUpBtn">Sign Up</button>
 			</div>
-			<form id="signInForm" style="display: none;" onsubmit="finfUser(event)">
+			<form id="signInForm" style="display: none;" onsubmit="findUser(event)">
 				<div class="input-container">
 					<label for="username">
 						<i class="fas fa-user"></i>
 					</label>
-					<input type="text" name="username" placeholder="Username" id="username1" required>
+					<input type="text" name="t_z" id="t_z1" placeholder="T_z" required pattern="\d{9}" title="יש להזין 9 ספרות">
+
 				</div>
 				<div class="input-container">
 					<label for="password">
 						<i class="fas fa-lock"></i>
 					</label>
-					<input type="password" name="password" placeholder="Password" id="password" required>
+					<input type="password" name="password" placeholder="Password" id="password1" required>
 					<span class="toggle-password" onclick="togglePassword('password')">
 						<i class="fas fa-eye"></i>
 					</span>
@@ -35,9 +36,10 @@
 			<form id="signUpForm" style="display: none;" onsubmit="addUser(event)">
 				<div class="input-container">
 					<label for="t_z">
-						<i class="fas fa-t_z"></i>
+						<i class="fas fa-id-card"></i>
 					</label>
-					<input type="text" name="t_z" placeholder="T_z" id="t_z" required>
+					<input type="text" name="t_z" id="t_z" placeholder="T_z" required pattern="\d{9}" title="יש להזין 9 ספרות">
+
 				</div>
 				<div class="input-container">
 					<label for="username">
@@ -47,9 +49,10 @@
 				</div>
 				<div class="input-container">
 					<label for="phone">
-						<i class="fas fa-user"></i>
+						<i class="fas fa-phone"></i>
 					</label>
-					<input type="text" name="phone" placeholder="Phone" id="phone" required>
+					<input type="tel" name="phone" id="phone" placeholder="Phone" required pattern="\d{10}" title="יש להזין מספר טלפון תקין (10 ספרות)">
+
 				</div>
 				<div class="input-container">
 					<label for="adress">
@@ -71,9 +74,13 @@
 				</div>
 				<div class="input-container">
 					<label for="status">
-						<i class="fas fa-address-card"></i>
+						<i class="fas fa-user-tag"></i>
 					</label>
-					<input type="text" name="status" placeholder="Status" id="status" required>
+					<select name="status" id="status" required>
+						<option value="" disabled selected>Select Status</option>
+						<option value="active">Active</option>
+						<option value="inactive">Inactive</option>
+					</select>
 				</div>
 				<div class="input-container">
 					<label for="passwordSignUp">

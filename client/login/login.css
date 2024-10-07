@@ -49,7 +49,9 @@ body {
 .login form input[type="text"], 
 .login form input[type="password"], 
 .login form input[type="email"], 
-.login form input[type="date"] {
+.login form input[type="date"] ,
+.login form input[type="tel"],
+.login form select{
     width: calc(100% - 50px);
     height: 50px;
     border: 1px solid #dee0e4;

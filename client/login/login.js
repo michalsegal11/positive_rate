@@ -60,21 +60,48 @@ function addUser(event) {
     .catch(error => console.error('Error adding user:', error));
 }
 
-function findUser(event){
-	event.preventDefault();
-	fetch(`http://localhost:3000/users/${event.t_z}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        usersArray = data.recordset; // שמירת המידע למערך
-    })
-    .catch(error => console.error('Error fetching users data:', error));
+async function findUser(event) {
+    event.preventDefault();
 
+    const id = document.getElementById('t_z1').value;
+    const password = document.getElementById('password1').value;
+    console.log(id, password);
+
+    // בדיקה שהשדות לא ריקים
+    if (!id || !password) {
+        alert('יש למלא את כל השדות!');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/users/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await response.json();
+      
+     
+		console.log(data);
+
+        if (!data || data.length === 0) {
+            alert("the user is not exist in the system, please try again");
+        } else {
+            // בדיקת סיסמה
+           
+            if (data['password'] === password) {
+                window.location.href = '../home_login/home.html'; // מעבר לדף הבא
+            } else {
+                alert("Incorrect password, please try again.");
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+    }
 }
+
 
 
 
