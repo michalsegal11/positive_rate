@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול משתמשים</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h2>ניהול משתמשים</h2>
+        <button id="getUsersBtn">הצג משתמשים</button>
+        <button id="addUserBtn">הוסף משתמש חדש</button>
+        <button id="updateUserBtn">עדכן משתמש</button>
+        <button id="deleteUserBtn">מחק משתמש</button>
+        
+        <div id="userForm" style="display:none;">
+            <h3>הוסף משתמש חדש</h3>
+            <input type="text" id="name" placeholder="שם" required>
+            <input type="text" id="phone" placeholder="טלפון" required>
+            <input type="email" id="gmail" placeholder="גימייל" required>
+            <input type="password" id="password" placeholder="סיסמה" required>
+            <input type="text" id="adress" placeholder="כתובת" required>
+            <input type="date" id="birthday" placeholder="תאריך לידה" required>
+            <input type="text" id="status" placeholder="סטטוס" required>
+            <button id="saveUserBtn">שמור</button>
+        </div>
+
+        <div id="user-table"></div>
+         <div id="edit-user"></div>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>

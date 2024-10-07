@@ -1,0 +1,315 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f7;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #2d6a4f;
+    color: white;
+}
+
+/* buttons of get delete pot and post: */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    position: fixed; /* שינוי ל-fixed כדי להבטיח שהכפתורים לא יושפעו מהגלריה */
+    left: 0;
+    top: 80px; /* ניתן לשנות את הערך לפי הצורך */
+    right: 40px;
+}
+
+.hidden-button {
+    width: 130px;
+    height: 130px;
+    margin:  0;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    background-size: contain; /* או cover */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.hidden-button:hover {
+    transform: scale(1.1);
+}
+
+.get {
+    background-image: url('../public/images/get.png');
+}
+
+.put {
+    background-image: url('../public/images/put.png');
+}
+
+.post {
+    background-image: url('../public/images/post.png');
+}
+
+.delete {
+    background-image: url('../public/images/delete.png');
+}
+
+/* עיצוב גלריה מותאם עם Flexbox */
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* רווח בין התמונות */
+    justify-content: center; /* יישור התמונות למרכז */
+}
+
+
+/* עיצוב כפתור הסגירה */
+.close-button1 {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+}
+
+.close-button1:hover {
+    background-color: #d32f2f;
+}
+
+.image-container {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* transition: transform 0.1s; */
+}
+
+.image-container .image-name {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+.image-container img {
+    width: 100px; /* גודל קבוע לתמונות */
+    height: auto; /* יחס גובה-רוחב */
+    z-index: 1; /* ערך נמוך יותר מחלונית המודאל */
+}
+
+.image-container:hover {
+    transform: scale(1.1); /* גודל מעט בעת ריחוף */
+}
+
+#device-details {
+    display: none; /* נעלם עד שיפתחו את חלונית הפרטים */
+    position: fixed; /* מתמקד על המסך */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white; /* צבע רקע לחלונית */
+    padding: 20px; /* ריווח פנימי */
+    border: 2px solid #ccc; /* גבול לחלונית */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* הצללה */
+    z-index: 100; /* מעל כל דבר אחר */
+}
+
+.hidden {
+    display: none; /* מחביא אלמנט */
+}
+
+#close-button {
+    background: none; /* ללא צבע רקע */
+    border: none; /* ללא גבול */
+    font-size: 24px; /* גודל טקסט */
+    cursor: pointer; /* ידוע שמצביע על אלמנט לחיץ */
+    margin-bottom: 10px; /* ריווח מתחת */
+}
+
+#save-button {
+    margin-top: 10px; /* ריווח מעל */
+}
+
+
+
+h1 {
+    margin: 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+
+#add-form {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    border-radius: 8px;
+}
+
+/* .close-button1 {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+}
+
+.close-button1:hover {
+    background-color: #d32f2f;
+} */
+
+
+/* עיצוב כפתור הסגירה */
+.close-button {
+    background-color: #ff5f5f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+}
+
+
+
+#add-device-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-device-form input {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+/* כפתור ההוספה */
+.device-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* אפקט כפתור הוספה */
+.device-button:hover {
+    background-color: #45a049;
+}
+
+.device {
+    margin-bottom: 20px;
+}
+.device img {
+    width: 200px;
+    height: 200px;
+}
+.device p {
+    margin-top: 5px;
+}
+
+
+.confirmation-modal {
+    position: fixed;
+    top: 0; /* לוודא שהחלונית תתחיל מראש המסך */
+    left: 0; /* מיקום החלונית בצד שמאל */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* לוודא שהוא מעל כל אלמנט אחר */
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 2001; /* להבטיח שהתוכן מעל הרקע המוחשך */
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+}
+
+.modal-content button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content button:first-child {
+    background-color: #d9534f;
+    color: white;
+}
+
+.modal-content button:last-child {
+    background-color: #5bc0de;
+    color: white;
+}
