@@ -1,359 +1,294 @@
-let file;
-let formData;
-let isCloseButtonListenerAdded = false; // משתנה למעקב אחרי פונקציה לכפתור הסגירה
-let equipmentArrayIn = []; // אתחול המערך
-let imageContainerIn; // משתנה לאחסון אלמנט תמונות
-fetchEquipmentData();
+
+let teachersArray = []; // אתחול המערך
+fetchteachersData(); // קריאה ל-fetch
+
 // מאזינים ללחיצה על כפתורים
-document.getElementById('add-device').addEventListener('click', Post);
-document.getElementById('fetchDataBtn').addEventListener('click', Get);
+document.getElementById('addteacherBtn').addEventListener('click', showAddteacherForm);
+document.getElementById('getteachersBtn').addEventListener('click', displayteachers);
+document.getElementById('updateteacherBtn').addEventListener('click', displayteachersForEdit);
+document.getElementById('deleteteacherBtn').addEventListener('click', displayteachersForDelete);
 
-function Get() {
-    const gallerySection = document.getElementById('gallery');
-    let closeButton = document.getElementById('close-gallery-btn');
-
-    // שליחת בקשה לשרת לקבלת הנתונים
-    fetch('http://localhost:3000/fitness_equipment', {
+function fetchteachersData() {
+    fetch('http://localhost:3000/teachers', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        equipmentArrayIn = data.recordset; // שמירת המידע למשתנה
+        teachersArray = data.recordset; // שמירת המידע למערך
+    })
+    .catch(error => console.error('Error fetching teachers data:', error));
+}
 
-        if (!Array.isArray(equipmentArrayIn)) {
-            throw new Error('Data is not an array');
-        }
+function displayteachers() {
+    const teacherTable = document.getElementById('teacher-table');
+    teacherTable.innerHTML = ''; // ניקוי הטבלה
+    teacherTable.style.display = 'block';
 
-        // מנקים את הגלריה
-        gallerySection.innerHTML = '';
+    const table = document.createElement('table');
+    const headerRow = document.createElement('tr');
+    const headers = ['בחר', 'שם', 'טלפון', 'אימייל', 'סיסמה', 'כתובת', 'תאריך לידה'];
 
-        // מציגים את התמונות ב-layout
-        equipmentArrayIn.forEach(device => {
-            const imageContainer = document.createElement('div');
-            imageContainer.classList.add('image-container');
+    headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+    });
+    table.appendChild(headerRow);
 
-            const img = document.createElement('img');
-            img.src = `../public/images/${device.name}.png`;
-            img.alt = device.about;
+    teachersArray.forEach(teacher => {
+        const row = document.createElement('tr');
+        const radioCell = document.createElement('td');
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'teacher-radio';
+        radio.value = teacher.t_z;
+        radioCell.appendChild(radio);
+        row.appendChild(radioCell);
 
-            const imageName = document.createElement('div');
-            imageName.classList.add('image-name');
-            imageName.textContent = device.name;
-
-            imageContainer.appendChild(img);
-            imageContainer.appendChild(imageName);
-            gallerySection.appendChild(imageContainer);
-
-            // מאזין לאירוע לחיצה להצגת פרטי המכשיר
-            imageContainer.addEventListener('click', () => showDeviceDetails(device));
+        const cells = [teacher.name, teacher.phone, teacher.gmail, teacher.password, teacher.adress, teacher.birthday];
+        cells.forEach(cellData => {
+            const td = document.createElement('td');
+            td.textContent = cellData;
+            row.appendChild(td);
         });
-
-        gallerySection.style.display = 'flex'; // עיצוב Flexbox
-        gallerySection.style.flexWrap = 'wrap'; // שורות מרובות
-
-        if (!closeButton) {
-            closeButton = document.createElement('button');
-            closeButton.id = 'close-gallery-btn';
-            closeButton.className = 'close-button1';
-            closeButton.textContent = 'סגור גלריה';
-            gallerySection.after(closeButton);
-        }
-
-        if (!isCloseButtonListenerAdded) {
-            closeButton.addEventListener('click', () => {
-                gallerySection.style.display = 'none';
-                closeButton.style.display = 'none';
-            });
-            isCloseButtonListenerAdded = true;
-        }
-
-        closeButton.style.display = 'block';
-    })
-    .catch(error => {
-        console.error('Error fetching equipment data:', error);
+        table.appendChild(row);
     });
+
+    teacherTable.appendChild(table);
 }
 
-function Post() {
-    let addFormSection = document.getElementById('add-form');
-    const gallerySection = document.getElementById('gallery');
-    let closeButton = document.getElementById('close-gallery-btn');
-    if (closeButton)
-        closeButton.style.display = 'none';
-    gallerySection.innerHTML = '';
+function showAddteacherForm() {
+    const addFormSection = document.getElementById('teacherForm');
+    addFormSection.innerHTML = ''; // ניקוי הטופס
+    addFormSection.style.display = 'block';
 
-    if (!addFormSection) {
-        const div = document.querySelector('main');
-        addFormSection = document.createElement('section');
-        addFormSection.id = 'add-form';
-        addFormSection.style.display = 'block';
+    const formTitle = document.createElement('h2');
+    formTitle.textContent = 'הוספת משתמש חדש';
+    
+    const fields = ['t_z','name', 'phone', 'gmail', 'password', 'adress', 'birthday'];
+    fields.forEach(field => {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = field;
+        input.placeholder = field.charAt(0).toUpperCase() + field.slice(1);
+        addFormSection.appendChild(input);
+    });
 
-        const formTitle = document.createElement('h2');
-        formTitle.textContent = 'הוספת מכשיר כושר';
-
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.id = 'device-image';
-        fileInput.accept = 'image/*';
-        fileInput.required = true;
-
-        const imageNameInput = document.createElement('input');
-        imageNameInput.type = 'text';
-        imageNameInput.id = 'image-name';
-        imageNameInput.placeholder = 'Enter new image name';
-
-        const deviceInfoInput = document.createElement('input');
-        deviceInfoInput.type = 'text';
-        deviceInfoInput.id = 'device-info';
-        deviceInfoInput.placeholder = 'מידע אודות המכשיר';
-        deviceInfoInput.required = true;
-
-        const closeButton = document.createElement('button');
-        closeButton.className = 'close-button';
-        closeButton.textContent = 'סגור';
-        closeButton.onclick = () => addFormSection.style.display = 'none';
-
-        const addButton = document.createElement('button');
-        addButton.className = 'device-button';
-        addButton.id = 'add-device-button';
-        addButton.textContent = 'הוסף מכשיר';
-
-        addFormSection.appendChild(formTitle);
-        addFormSection.appendChild(fileInput);
-        addFormSection.appendChild(imageNameInput);
-        addFormSection.appendChild(deviceInfoInput);
-        addFormSection.appendChild(addButton);
-        addFormSection.appendChild(closeButton);
-
-        div.appendChild(addFormSection);
-
-        addAll(); // מאזין להוספת מכשיר
-        addImage(); // מאזין לטעינת תמונה
-    } else {
-        addFormSection.style.display = 'block';
-    }
+    const addButton = document.createElement('button');
+    addButton.textContent = 'הוסף משתמש';
+    addButton.addEventListener('click', addteacher);
+    
+    addFormSection.appendChild(formTitle);
+    addFormSection.appendChild(addButton);
 }
 
-function fetchEquipmentData() {
-    fetch('http://localhost:3000/fitness_equipment', {
-        method: 'GET',
+function addteacher() {
+    const newteacher = {};
+    ['t_z','name', 'phone', 'gmail', 'password', 'adress', 'birthday'].forEach(field => {
+        newteacher[field] = document.getElementById(field).value;
+    });
+
+    fetch('http://localhost:3000/teachers', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
+        body: JSON.stringify(newteacher),
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
+    .then(response => response.json())
+    .then(() => {
+        alert('משתמש נוסף בהצלחה!');
+        fetchteachersData();
     })
-    .then(data => {
-        equipmentArrayIn = data.recordset;
-    document.getElementById('delete').addEventListener('click', DELETE);
-    document.getElementById('put').addEventListener('click', displayEquipment);
-    })
-    .catch(error => {
-        console.error('Error fetching equipment data:', error);
-    });
+    .catch(error => console.error('Error adding teacher:', error));
 }
 
-function displayEquipment() {
-    const gallerySection = document.getElementById('gallery');
-    gallerySection.innerHTML = ''; // ניקוי גלריה
-    gallerySection.style.display='flex';
-    equipmentArrayIn.forEach(device => {
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('image-container');
+function displayteachersForEdit() {
+    const teacherTable = document.getElementById('teacher-table');
+    teacherTable.innerHTML = ''; // ניקוי הטבלה
+    teacherTable.style.display = 'block';
 
-        const img = document.createElement('img');
-        img.src = `../public/images/${device.name}.png`;
-        img.alt = device.about;
+    const table = document.createElement('table');
+    const headerRow = document.createElement('tr');
+    const headers = ['בחר', 'שם', 'טלפון', 'אימייל', 'סיסמה', 'כתובת', 'תאריך לידה'];
 
-        const imageName = document.createElement('div');
-        imageName.classList.add('image-name');
-        imageName.textContent = device.name;
-
-        imageContainer.appendChild(img);
-        imageContainer.appendChild(imageName);
-        gallerySection.appendChild(imageContainer);
-
-        imageContainer.addEventListener('click', () => showDeviceDetails(device));
+    headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
     });
-}
+    table.appendChild(headerRow);
 
+    teachersArray.forEach(teacher => {
+        const row = document.createElement('tr');
+        const radioCell = document.createElement('td');
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'teacher-radio';
+        radio.value = teacher.t_z;
+        radioCell.appendChild(radio);
+        row.appendChild(radioCell);
 
-function showDeviceDetails(device) {
-    const detailsSection = document.getElementById('device-details');
-    detailsSection.innerHTML = ''; // מנקים פרטים קודמים
-
-    const closeButton = document.createElement('button');
-    closeButton.id = 'close-button2';
-    closeButton.innerHTML = '←';
-    closeButton.addEventListener('click', () => {
-        detailsSection.classList.add('hidden');
-        detailsSection.style.display = 'none';
+        const cells = [teacher.name, teacher.phone, teacher.gmail, teacher.password, teacher.adress, teacher.birthday];
+        cells.forEach(cellData => {
+            const td = document.createElement('td');
+            td.textContent = cellData;
+            row.appendChild(td);
+        });
+        table.appendChild(row);
     });
 
-    const deviceName = document.createElement('h2');
-    deviceName.id = 'device-name';
-    deviceName.textContent = device.name;
-
-    const deviceInfo = document.createElement('p');
-    deviceInfo.id = 'device-info';
-    deviceInfo.textContent = device.about;
-
-    const input = document.createElement('input');
-    input.id = 'device-input';
-    input.type = 'text';
-    input.value = device.about;
-
-    const saveButton = document.createElement('button');
-    saveButton.id = 'save-button';
-    saveButton.textContent = 'שמור';
-    saveButton.addEventListener('click', () => {
-        device.about = input.value;
-        alert('פרטי מכשיר שונו!');
-    });
-
-    detailsSection.appendChild(closeButton);
-    detailsSection.appendChild(deviceName);
-    detailsSection.appendChild(deviceInfo);
-    detailsSection.appendChild(input);
-    detailsSection.appendChild(saveButton);
-
-    detailsSection.classList.remove('hidden');
-    detailsSection.style.display = 'block';
-}
-
-function addAll() {
-    document.getElementById('add-device-button').addEventListener('click', async () => {
-        const name = document.getElementById('image-name').value;
-        const info = document.getElementById('device-info').value;
-        if (!name || !info || !file) {
-            alert('נא למלא את כל השדות');
+    const editButton = document.createElement('button');
+    editButton.textContent = 'עדכן';
+    editButton.addEventListener('click', () => {
+        const selectedteacher = document.querySelector('input[name="teacher-radio"]:checked');
+        if (!selectedteacher) {
+            alert('נא לבחור משתמש');
             return;
         }
-        try {
-            await fetch('http://localhost:3000/upload-image', {
-                method: 'POST',
-                body: formData,
-            });
 
-            const response = await fetch('http://localhost:3000/fitness_equipment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, about: info }),
-            });
+        const teacherId = selectedteacher.value;
+        const teacher = teachersArray.find(u => u.t_z === teacherId);
+        showEditteacherForm(teacher);
+    });
 
+    teacherTable.appendChild(table);
+    teacherTable.appendChild(editButton);
+}
+
+function showEditteacherForm(teacher) {
+    const editteacherSection = document.getElementById('edit-teacher');
+    editteacherSection.innerHTML = ''; // ניקוי הטופס
+    editteacherSection.style.display = 'block';
+
+    const formTitle = document.createElement('h2');
+    formTitle.textContent = 'עריכת משתמש';
+    
+    const fields = ['name', 'phone', 'gmail', 'password', 'adress', 'birthday'];
+    fields.forEach(field => {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = field;
+        input.placeholder = field.charAt(0).toUpperCase() + field.slice(1);
+        input.value = teacher[field]; // הצגת ערכים קיימים
+        editteacherSection.appendChild(input);
+    });
+
+    const updateButton = document.createElement('button');
+    updateButton.textContent = 'לעדכון';
+    updateButton.addEventListener('click', () => updateteacher(teacher.t_z));
+    
+    editteacherSection.appendChild(formTitle);
+    editteacherSection.appendChild(updateButton);
+}
+
+function updateteacher(teacherId) {
+        const updatedOneteacher = {};
+        
+        ['name', 'phone', 'gmail', 'password', 'adress', 'birthday'].forEach(field => {
+            updatedOneteacher[field] = document.getElementById(field).textContent;
+        });
+        updatedOneteacher['t_z']=teacherId;
+        console.log(updatedOneteacher);
+        fetch(`http://localhost:3000/teachers/${teacherId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedOneteacher),
+        }).then(response=>{
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
-            const result = await response.json();
-            alert('Device added successfully!');
-        } catch (error) {
-            console.error('Error adding device:', error);
-            alert('Failed to add device.');
-        }
-    });
-}
-
-function addImage() {
-    document.getElementById('device-image').addEventListener('change', async (event) => {
-        file = event.target.files[0];
-        if (file) {
-            const newName = encodeURIComponent(document.getElementById('image-name').value) || file.name;
-            const blob = new Blob([file], { type: file.type });
-            const newFile = new File([blob], newName, { type: file.type });
-            const formData = new FormData();
-            formData.append('image', newFile);
-            formData.append('newName', newName);
-        }
-    });
-}
-
-function DELETE() {
-    const gallerySection = document.getElementById('gallery');
-    gallerySection.innerHTML = ''; // ניקוי גלריה
-    gallerySection.style.display='flex';
-    equipmentArrayIn.forEach(device => {
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('image-container');
-
-        const img = document.createElement('img');
-        img.src = `../public/images/${device.name}.png`;
-        img.alt = device.about;
-
-        const imageName = document.createElement('div');
-        imageName.classList.add('image-name');
-        imageName.textContent = device.name;
-
-        imageContainer.appendChild(img);
-        imageContainer.appendChild(imageName);
-        gallerySection.appendChild(imageContainer);
-
-        imageContainer.addEventListener('click', () => confirmDelete(device));
-    });
-
-}
-
-function confirmDelete(device) {
-    const confirmationModal = document.createElement('div');
-    confirmationModal.classList.add('confirmation-modal');
-    const modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-
-    const message = document.createElement('p');
-    message.textContent = 'האם אתה בטוח שאתה רוצה למחוק?';
-
-    const confirmButton = document.createElement('button');
-    confirmButton.textContent = 'אשר';
-    confirmButton.addEventListener('click', async () => {
-        try {
-            await fetch(`http://localhost:3000/fitness_equipment/${device.code_fitness}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({code_fitness:device.code_fitness, name:device.name, about: device.about }),
-            });
-    
-            // בודקים שהבקשה הצליחה
-            if (response.ok) {
-                alert('מכשיר נמחק בהצלחה!');
-                confirmationModal.remove();
-                Get(); // מרענן את הגלריה
-            } else {
-                throw new Error('Network response was not ok');
-            }
-        } catch (error) {
-            console.error('Error deleting device:', error);
-            alert('Failed to delete device.');
-        }
-        });
-    
-        const cancelButton = document.createElement('button');
-        cancelButton.textContent = 'בטל';
-        cancelButton.addEventListener('click', () => {
-            confirmationModal.remove();
-        });
-    
-        modalContent.appendChild(message);
-        modalContent.appendChild(confirmButton);
-        modalContent.appendChild(cancelButton);
-        confirmationModal.appendChild(modalContent);
-        document.body.appendChild(confirmationModal);
-}
-
-    
+            return response.json();
+        }).then(() => {
+            alert('פרטי המשתמש עודכנו בהצלחה!');
+            fetchteachersData();
+        }) .catch(error => console.error('Error updating teacher:', error))
    
+}
+
+function displayteachersForDelete() {
+    const teacherTable = document.getElementById('teacher-table');
+    teacherTable.innerHTML = ''; // ניקוי הטבלה
+    teacherTable.style.display = 'block';
+
+    const table = document.createElement('table');
+    const headerRow = document.createElement('tr');
+    const headers = ['בחר', 'שם', 'טלפון', 'אימייל', 'סיסמה', 'כתובת', 'תאריך לידה'];
+
+    headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+    });
+    
+    table.appendChild(headerRow);
+
+    teachersArray.forEach(teacher => {
+        const row = document.createElement('tr');
+        const radioCell = document.createElement('td');
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'teacher-radio';
+        radio.value = teacher.t_z;
+        radioCell.appendChild(radio);
+        row.appendChild(radioCell);
+
+        const cells = [teacher.name, teacher.phone, teacher.gmail, teacher.password, teacher.adress, teacher.birthday];
+        cells.forEach(cellData => {
+            const td = document.createElement('td');
+            td.textContent = cellData;
+            row.appendChild(td);
+        });
+        table.appendChild(row);
+    });
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'מחק';
+    deleteButton.addEventListener('click', () => {
+        const selectedteacher = document.querySelector('input[name="teacher-radio"]:checked');
+        if (!selectedteacher) {
+            alert('נא לבחור משתמש');
+            return;
+        }
+
+       
+        deleteteacher(selectedteacher);
+    });
+
+    teacherTable.appendChild(table);
+    teacherTable.appendChild(deleteButton);
+}
+
+function deleteteacher(selectedteacher) {
+    fetch(`http://localhost:3000/teachers/${selectedteacher.t_z}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({t_z: selectedteacher.t_z,
+        name: selectedteacher.name,
+        phone: selectedteacher.phone,
+        gmail: selectedteacher.gmail,
+        password: selectedteacher.password,
+        adress: selectedteacher.adress,
+        birthday: selectedteacher.birthday,
+       
+            }),
+
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('המשתמש נמחק בהצלחה!');
+            fetchteachersData();
+        } else {
+            alert('שגיאה במחיקת המשתמש');
+        }
+    })
+    .catch(error => console.error('Error deleting teacher:', error));
+}
+

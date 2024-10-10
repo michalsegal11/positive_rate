@@ -3,35 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מכשירי כושר</title>
-    <link rel="stylesheet" href="../manager/admin.css">
+    <title>ניהול משתמשים</title>
+    <link rel="stylesheet" href="../admin.css">
 </head>
 <body>
-
+  
     <header>
-        <h1>מכשירי כושר</h1>
+        <h1>ניהול מורות</h1>
     </header>
-
     <main>
-       
-        <!-- <button class="device-button" id="fetchDataBtn">רשימת מכשירי כושר קיימים</button> -->
-
-        <section id="gallery">
-            
-        </section>
-        <section id="device-details"></section>
+        
         <div class="button-container">
-            <button class="hidden-button get" id="fetchDataBtn"></button>
-            <button class="hidden-button post"  id="add-device" ></button>
-            <button class="hidden-button put" id="put"></button> 
-            <button class="hidden-button delete" id="delete"></button>
+        <button class="hidden-button get" id="getteachersBtn"></button>
+        <button class="hidden-button post"  id="addteacherBtn" ></button>
+        <button class="hidden-button put" id="updateteacherBtn"></button> 
+        <button class="hidden-button delete" id="deleteteacherBtn"></button>
         </div>
-    
-    </main>
+        
+        <div id="teacherForm" style="display:none;">
+            <h3>הוסף משתמש חדש</h3>
+            <input type="text" id="name" placeholder="שם" required>
+            <input type="text" id="phone" placeholder="טלפון" required>
+            <input type="email" id="gmail" placeholder="גימייל" required>
+            <input type="password" id="password" placeholder="סיסמה" required>
+            <input type="text" id="adress" placeholder="כתובת" required>
+            <input type="date" id="birthday" placeholder="תאריך לידה" required>
+           
+            <button id="saveteacherBtn">שמור</button>
+        </div>
 
-    <script src="../manager/index.js"></script>
+        <div id="teacher-table"></div>
+        <div id="edit-teacher"></div>
+    </main>
+    <script src="./index.js"></script>
 </body>
 </html>
-
-
-

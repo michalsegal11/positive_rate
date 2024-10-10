@@ -40,8 +40,8 @@ const addcategory = async (newcategoy) => {
         "gmail": "string",
         "password": "string",
         "adress": "string",
-        "birthday": "string",
-        "status": "string"
+        "birthday": "datetime",
+       
     };
     try {
         let nameValues = "";

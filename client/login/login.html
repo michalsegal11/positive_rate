@@ -14,6 +14,7 @@
 				<button id="signInBtn">Sign In</button>
 				<button id="signUpBtn">Sign Up</button>
 			</div>
+			<!-- signIn -->
 			<form id="signInForm" style="display: none;" onsubmit="findUser(event)">
 				<div class="input-container">
 					<label for="username">
@@ -33,6 +34,7 @@
 				</div>
 				<input type="submit" value="Sign In">
 			</form>
+			<!-- signUP -->
 			<form id="signUpForm" style="display: none;" onsubmit="addUser(event)">
 				<div class="input-container">
 					<label for="t_z">
@@ -92,11 +94,33 @@
 					</span>
 				</div>
 								
-				<button type="submit">Sign Up</button>
+				<input type="submit" value="Sign Up">
 			
 			</form>
+			
+			<!-- //paid -->
+			<form class="container" style="display: none;" id="paid"  onsubmit="enterToArtibute(event)">
+					<h1>הזן פרטי אשראי</h1>
+					<div class="input-container">
+						<label for="cardNumber"><i class="fas fa-credit-card"></i></label>
+						<input type="text" name="cardNumber" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+					</div>
+					<div class="input-container">
+						<label for="cardHolder"><i class="fas fa-user"></i></label>
+						<input type="text" name="cardHolder" id="cardHolder" placeholder="שמך כפי שמופיע על הכרטיס" required>
+					</div>
+					<div class="input-container">
+						<label for="expiryDate"><i class="fas fa-calendar-alt"></i></label>
+						<input type="text" name="expiryDate" id="expiryDate" placeholder="MM/YY" required>
+					</div>
+					<div class="input-container">
+						<label for="cvv"><i class="fas fa-lock"></i></label>
+						<input type="text" name="cvv" id="cvv" placeholder="XXX" required>
+					</div>
+					<input type="submit" value="שמור פרטים">
+			</form>
+		
 		</div>
-
 		<script src="login.js"></script>
 	</body>
 </html>

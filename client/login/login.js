@@ -58,6 +58,10 @@ function addUser(event) {
        
     })
     .catch(error => console.error('Error adding user:', error));
+    
+     document.getElementById('signUpForm').style.display = 'none';
+     document.getElementById('paid').style.display = 'block';
+    
 }
 
 async function findUser(event) {
@@ -100,6 +104,28 @@ async function findUser(event) {
     } catch (error) {
         console.error('Error fetching user:', error);
     }
+}
+
+
+function enterToArtibute(event)
+{
+    event.preventDefault();
+
+    const creditCard = document.getElementById('cardNumber').value;
+    const ownName = document.getElementById('cardHolder').value;  
+    const endTime = document.getElementById('expiryDate').value;
+    const cvv = document.getElementById('cvv').value;
+    console.log(id, password);
+
+    // בדיקה שהשדות לא ריקים
+    if (!creditCard || !ownName||!endTime || !cvv) {
+        alert('יש למלא את כל השדות!');
+        return;
+    }
+    window.location.href = '../home_login/home.html'; // מעבר לדף הבא
+
+
+
 }
 
 

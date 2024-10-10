@@ -1,40 +1,41 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="he">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ניהול משתמשים</title>
+    <title>ניהול קטגוריות</title>
     <link rel="stylesheet" href="../admin.css">
 </head>
 <body>
   
     <header>
-        <h1>ניהול משתמשים</h1>
+        <h1>ניהול קטגוריות</h1>
     </header>
     <main>
         
         <div class="button-container">
-        <button class="hidden-button get" id="getUsersBtn"></button>
-        <button class="hidden-button post"  id="addUserBtn" ></button>
-        <button class="hidden-button put" id="updateUserBtn"></button> 
-        <button class="hidden-button delete" id="deleteUserBtn"></button>
+            <button class="hidden-button get" id="getCategoriesBtn"></button>
+            <button class="hidden-button post"  id="addCategoryBtn" ></button>
+            <button class="hidden-button put" id="updateCategoryBtn"></button> 
+            <button class="hidden-button delete" id="deleteCategoryBtn"></button>
         </div>
         
-        <div id="userForm" style="display:none;">
-            <h3>הוסף משתמש חדש</h3>
+        <div id="categoryForm" style="display:none;">
+            <h3>הוסף קטגוריה חדשה</h3>
+            <input type="text" id="t_z" placeholder="מזהה" required>
             <input type="text" id="name" placeholder="שם" required>
             <input type="text" id="phone" placeholder="טלפון" required>
             <input type="email" id="gmail" placeholder="גימייל" required>
             <input type="password" id="password" placeholder="סיסמה" required>
             <input type="text" id="adress" placeholder="כתובת" required>
             <input type="date" id="birthday" placeholder="תאריך לידה" required>
-            <input type="text" id="status" placeholder="סטטוס" required>
-            <button id="saveUserBtn">שמור</button>
+            <button id="saveCategoryBtn">שמור</button>
         </div>
 
-        <div id="user-table"></div>
-        <div id="edit-user"></div>
+        <div id="category-table"></div>
+        <div id="edit-category"></div>
     </main>
     <script src="./index.js"></script>
 </body>
 </html>
+
